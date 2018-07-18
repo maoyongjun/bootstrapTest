@@ -4,15 +4,18 @@
 		"sn": "7CE821P5CX",
 		"board": {
 			"pn": "T-Twins",
-			"sn": "02012EW00T0BAU05P"
+			"sn": "02012EW00T0BAU05P",
+			"fw": "BMC:1.1;BIOS:2.2"
 		},
 		"cpu": {
 			"pn": "Intel(R)Xeon(R)Gold6148CPU@2.40GHz",
-			"sn": "54060500FFFBEBBF"
+			"sn": "54060500FFFBEBBF",
+			"fw": null
 		},
 		"hdd": {
 			"pn": "INTELSSDSC2KB480G7",
-			"sn": "BTYS80550GDH480BGN"
+			"sn": "BTYS80550GDH480BGN",
+			"fw": null
 		},
 		"memory": [
 			{
@@ -67,11 +70,13 @@
 		"nic": [
 			{
 				"pn": "MellanoxTechnologiesMT27710Family[ConnectX-4Lx]",
-				"sn": "MT1814X07142"
+				"sn": "MT1814X07142",
+				"fw": "123213213"
 			},
 			{
 				"pn": "MellanoxTechnologiesMT27710Family[ConnectX-4Lx]",
-				"sn": "MT1814X07142"
+				"sn": "MT1814X07142",
+				"fw": null
 			}
 		],
 		"psu": [

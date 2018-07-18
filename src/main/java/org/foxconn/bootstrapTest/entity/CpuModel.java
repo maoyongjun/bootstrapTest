@@ -3,6 +3,18 @@ package org.foxconn.bootstrapTest.entity;
 public class CpuModel {
 	private String pn;
 	private String sn;
+	private String fw;
+	
+	
+	public String getFw() {
+		return fw;
+	}
+	public void setFw(String fw) {
+		if(null==fw || "null".equalsIgnoreCase(fw)){
+			fw="";
+		}
+		this.fw = fw;
+	}
 	public String getPn() {
 		return pn;
 	}

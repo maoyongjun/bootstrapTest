@@ -11,8 +11,18 @@ public class SystemModel {
 	private List<MemoryModel> memory;
 	private List<NicModel> nic;
 	private List<PsuModel> psu;
+	private String fw;
 	
 	
+	public String getFw() {
+		return fw;
+	}
+	public void setFw(String fw) {
+		if(null==fw || "null".equalsIgnoreCase(fw)){
+			fw="";
+		}
+		this.fw = fw;
+	}
 	public BoardModel getBoard() {
 		return board;
 	}

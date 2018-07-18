@@ -48,6 +48,7 @@ public class BootStrapServices {
 		BoardModel  board = new BoardModel();
 		board.setPn("T-Twins");
 		board.setSn("02012EW00T0BAU05P");
+		board.setFw("BMC:1.1;BIOS:2.2");
 		system.setBoard(board);
 		CpuModel cpu = new CpuModel();
 		cpu.setPn("Intel(R)Xeon(R)Gold6148CPU@2.40GHz");
@@ -124,6 +125,7 @@ public class BootStrapServices {
 		NicModel nic = new NicModel();
 		nic.setPn("MellanoxTechnologiesMT27710Family[ConnectX-4Lx]");
 		nic.setSn("MT1814X07142");
+		nic.setFw("123213213");
 		nics.add(nic);
 		
 		nic = new NicModel();
