@@ -11,6 +11,7 @@ import org.foxconn.bootstrapTest.entity.NicModel;
 import org.foxconn.bootstrapTest.entity.PsuModel;
 import org.foxconn.bootstrapTest.entity.Result;
 import org.foxconn.bootstrapTest.entity.SystemModel;
+import org.foxconn.bootstrapTest.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 
-import net.minidev.json.JSONArray;
 
 
 @RestController
@@ -40,6 +40,29 @@ public class BootStrapServices {
 		System.out.println(result);
 	}
 	
+	@PostMapping(path="/test4",consumes="application/json")
+	public void getJsonStrs( @RequestBody String user){
+		System.out.println(user);
+	}
+	
+	
+	@GetMapping(value="/test3")
+	public List<User>  getjson(){
+		List<User> users = new ArrayList<User>();
+		User user = new User();
+		user.setId("1");
+		user.setName("张三");
+		user.setSex("男");
+		user.setTime("2017-08-09");
+		users.add(user);
+		user = new User();
+		user.setId("1");
+		user.setName("李四");
+		user.setSex("男");
+		user.setTime("2017-08-10");
+		users.add(user);
+		return users;
+	}
 	@GetMapping(value="/test")
 	public Result getPage(){
 		SystemModel system = new SystemModel();

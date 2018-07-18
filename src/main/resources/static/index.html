@@ -1,112 +1,48 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8" />
-<head>
-    <title>Parent Page</title>
-		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<link href="css/bootstrap.css" rel="stylesheet">
-		<link href="css/bootstrap-theme.css" rel="stylesheet">
-				
-        <script language="javascript" type="text/javascript">
-			var list;
-			var block;
-			function ytjInfo5($scope,$filter) {
-				var data;
-				 $.ajax({
-						url:"test",
-						type:"get",
-						dataType:"json",
-						success:function(result){
-							data=result;
-						},
-						error:function(){
-							alert("change an exception occurs!");
-						}
-					});
-					
-					$scope.ytjs =data;
-				$scope.setBlock=function(){
-					list=$filter('filter')($scope.ytjs,$scope.block);
-				}
-			}
-			function filterList(block){
-				alert(list[0].point);
-			}
-			function getPoint(obj){
-				alert(obj.id);
-			}
-			function getUpdate(obj){
-				alert(obj.id);
-			}
-			function save(obj){
-				alert(obj.value);
-			}
-		</script>
-</head>
-<body>
-   <body>
-		<div class="container" style="width:100%">
-			<div class="row clearfix" >
-				<div class="col-md-12 column">
-					<div ng-app="" ng-controller="ytjInfo5" ng-init="block">
-					<div class="col-md-12 column" style="font-size:16px;font-weight:bold;text-align:center;line-height:36px;">
-						辖属区域过滤：
-					</div>
-					<div class="col-md-12 column">
-						<input type="text" class="form-control" ng-model="block" ng-change="setBlock()"/>
-					</div>
-					<!-- <div class="col-md-12 column">
-						 <button type="button" class="btn btn-default" onclick="filterList()">按钮</button>
-					</div> -->
-						<table class="table">
-							<thead>
-								<tr class="warning">
-									<th style="text-align: center; vertical-align:middle;">
-										编号
-									</th>
-									<th style="text-align: center; vertical-align:middle;">
-										辖属区域
-									</th>
-									<th style="text-align: center; vertical-align:middle;">
-										地址
-									</th>
-									<th style="text-align: center; vertical-align:middle;">
-										状态
-									</th>
-									<th style="text-align: center; vertical-align:middle;">
-										编辑
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="success">
-								<td style="text-align: center; vertical-align:middle;">新增</td>
-								<td><input type="text" class="form-control" ng-model="addBlock" /></td>
-								<td><input type="text" class="form-control" ng-model="addAddress" /></td>
-								<td><input type="text" class="form-control" ng-model="addAction" /></td>
-								<td><button type="button" class="btn btn-default" onclick="save(this)" value="{{addBlock}},{{addAddress}},{{addAction}}" id="">保存</button></td>
-								</tr>
-							</tbody>
-							<tbody>
-								<tr ng-repeat="x in ytjs | filter:block | orderBy:'index'">
-								<td style="text-align: center; vertical-align:middle;">{{ $index + 1 }}</td>
-								<td><input type="text" class="form-control" style="text-align: center; vertical-align:middle;" ng-model="x.updateBlock"  placeholder="{{x.name}}"></input></td>
-								<td><input type="text" class="form-control" style="text-align: center; vertical-align:middle;" ng-model="x.updateAddress" placeholder="{{x.category}}" /></td>
-								<td><input type="text" class="form-control" style="text-align: center; vertical-align:middle;" ng-model="x.updatepartno" placeholder="{{x.partno}}" /></td>
-								<td><input type="text" class="form-control" style="text-align: center; vertical-align:middle;" ng-model="x.updateworkoderno" placeholder="{{x.workoderno}}" /></td>
-								<td >{{x.point}}</td>
-								<td>
-									<button type="button" class="btn btn-default" onclick="getUpdate(this)" id="{{x.updateBlock}},{{x.updateAddress}},{{x.updateAction}}">修改</button>
-									<button type="button" class="btn btn-default" onclick="getPoint(this)" id="{{x.block}},{{x.address}},{{x.action}}">删除</button>								
-								</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-</body>
+	<head>
+	    <meta charset="utf-8">
+	    <link rel="icon" href="img/favicon.ico">
+	    <title>Bootstrap 模板</title>
+	    <!--
+        	描述：样式导入
+        -->
+	    <link rel="stylesheet" href="js/bootstrap_above/bootstrap/css/bootstrap.min.css" />
+	    <link rel="stylesheet" href="js/bootstrap_above/bootstrap-table-develop/dist/bootstrap-table.css"/>
+	    
+	    <!--
+        	描述：js导入，注意顺序，jquery必须引入
+        	bootstrap-table-zh-CN.js为表格汉化的文件
+        	FileSaver.min.js等是关联引用文件
+        -->
+	    <script src="js/bootstrap_above/jquery-1.9.1/jquery.min.js"></script>
+	    <script src="js/bootstrap_above/bootstrap/js/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="js/bootstrap_above/bootstrap-table-develop/dist/bootstrap-table.js"></script>
+		<script type="text/javascript" src="js/bootstrap_above/bootstrap-table-develop/dist/locale/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/export/bootstrap-table-export.js"></script>
+
+	    <script src="js/bootstrap_above/tableExport/libs/pdfmake/pdfmake.min.js"></script>
+		<script src="js/bootstrap_above/tableExport/libs/pdfmake/vfs_fonts.js"></script>
+		<script type="text/javascript" src="js/bootstrap_above/tableExport/libs/FileSaver/FileSaver.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap_above/tableExport/libs/jsPDF/jspdf.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap_above/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+		<script type="text/javascript" src="js/bootstrap_above/tableExport/tableExport.js"></script>
+	    
+	    <!--
+        	作者：yyj
+        	时间：2017-08-08
+        	描述：edittable
+        -->
+        <link href="js/bootstrap_above/x-editable-develop/dist/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+		<script src="js/bootstrap_above/x-editable-develop/dist/bootstrap-editable/js/bootstrap-editable.js"></script>
+		<script src="js/bootstrap_above/bootstrap-table-develop/dist/extensions/editable/bootstrap-table-editable.js"></script>
+		
+		
+		<script src="js/table.js"></script>
+	</head>
+	<body>
+		<table class="table-responsive" id="db_dependences">
+        </table>
+	</body>
+	
 </html>

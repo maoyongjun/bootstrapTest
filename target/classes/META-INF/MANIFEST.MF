@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: bootstrapTest
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: H7108464
+Built-By: mao_yongjun
 Implementation-Vendor-Id: org.foxconn.bootstrap
-Build-Jdk: 1.8.0_101
+Build-Jdk: 1.8.0_171
 Implementation-URL: http://projects.spring.io/spring-boot/bootstrapTes
  t/
 Created-By: Maven Integration for Eclipse
