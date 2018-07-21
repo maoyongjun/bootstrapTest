@@ -3,10 +3,15 @@ package org.foxconn.bootstrapTest.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.foxconn.bootstrapTest.dao.LabelDao;
 import org.foxconn.bootstrapTest.entity.BoardModel;
 import org.foxconn.bootstrapTest.entity.CpuModel;
 import org.foxconn.bootstrapTest.entity.HddModel;
+import org.foxconn.bootstrapTest.entity.LabelEntity;
 import org.foxconn.bootstrapTest.entity.MemoryModel;
+import org.foxconn.bootstrapTest.entity.Msg;
 import org.foxconn.bootstrapTest.entity.NicModel;
 import org.foxconn.bootstrapTest.entity.PsuModel;
 import org.foxconn.bootstrapTest.entity.Result;
@@ -17,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
@@ -26,8 +32,8 @@ import com.alibaba.fastjson.JSON;
 @RestController
 public class BootStrapServices {
 	Logger logger = LoggerFactory.getLogger(BootStrapServices.class);
-	
-	
+	@Resource
+	LabelDao labelDao;
 	@PostMapping(path="/test1",consumes="application/json")
 	public void getJson(@RequestBody Result system){
 		System.out.println(system);
@@ -44,8 +50,30 @@ public class BootStrapServices {
 	public void getJsonStrs( @RequestBody String user){
 		System.out.println(user);
 	}
+	@PostMapping(path="/label/add",consumes="application/json",produces="application/json")
+	public Msg addLabel(@RequestBody LabelEntity label){
+		labelDao.addLabel(label);
+		Msg msg = new Msg();
+		msg.setMsg("OK");
+		return msg;
+	}
+	@PostMapping(path="/label/update",consumes="application/json")
+	public void updateLabel(@RequestBody LabelEntity label){
+		labelDao.updateLabel(label);
+	}
 	
-	
+	@PostMapping(path="/label/delete",consumes="application/json",produces="application/json")
+	public Msg deleteLabel(@RequestBody LabelEntity label){
+		labelDao.deleteLabel(label);
+		Msg msg = new Msg();
+		msg.setMsg("OK");
+		return msg;
+	}
+	@GetMapping(path="/label/query",produces="application/json")
+	public List< LabelEntity> queryLabel(LabelEntity label){
+		List< LabelEntity> list = labelDao.findAll(label);
+		return list;
+	}
 	@GetMapping(value="/test3")
 	public List<User>  getjson(){
 		List<User> users = new ArrayList<User>();
