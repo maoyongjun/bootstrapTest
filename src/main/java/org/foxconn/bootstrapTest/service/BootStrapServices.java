@@ -57,6 +57,16 @@ public class BootStrapServices {
 		msg.setMsg("OK");
 		return msg;
 	}
+	
+	@PostMapping(path="/label/addList",consumes="application/json",produces="application/json")
+	public Msg addLabelList(@RequestBody List<LabelEntity> label){
+		for(LabelEntity e:label) {
+			labelDao.addLabel(e);
+		}
+		Msg msg = new Msg();
+		msg.setMsg("OK");
+		return msg;
+	}
 	@PostMapping(path="/label/update",consumes="application/json")
 	public void updateLabel(@RequestBody LabelEntity label){
 		labelDao.updateLabel(label);
@@ -71,7 +81,9 @@ public class BootStrapServices {
 	}
 	@GetMapping(path="/label/query",produces="application/json")
 	public List< LabelEntity> queryLabel(LabelEntity label){
+		System.out.println(label);
 		List< LabelEntity> list = labelDao.findAll(label);
+		
 		return list;
 	}
 	@GetMapping(value="/test3")

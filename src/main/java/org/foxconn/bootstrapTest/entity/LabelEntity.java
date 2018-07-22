@@ -90,14 +90,27 @@ public class LabelEntity {
 	public Integer getQty() {
 		return qty;
 	}
-	public void setQty(Integer qty) {
-		this.qty = qty;
+	public void setQty(String qty) {
+		Integer q=0;
+		try {
+			 q = Integer.parseInt(qty);
+		} catch (Exception e) {
+			
+		}
+		this.qty = q;
 	}
 	public String getIsPreDo() {
 		return isPreDo;
 	}
 	public void setIsPreDo(String isPreDo) {
 		this.isPreDo = isPreDo;
+	}
+	@Override
+	public String toString() {
+		return "LabelEntity [Id=" + Id + ", parentSkuno=" + parentSkuno + ", skuno=" + skuno + ", label=" + label
+				+ ", qty=" + qty + ", isPreDo=" + isPreDo + ", valid=" + valid + ", version=" + version
+				+ ", description=" + description + ", others=" + others + ", ids=" + ids + ", parentSkunos="
+				+ parentSkunos + ", skunos=" + skunos + "]";
 	}
 	
 }

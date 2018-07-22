@@ -21,12 +21,76 @@ $(function () {
 	$("#deleteLabel").click(deleteLabel);
 	$("#queryLabel").click(queryLabel);
 	$("#queryLabelsubmit").click(queryLabelAction);
+	$("#saveRowbtn").click(saveRowbtnAction);
+	
+	
+	$('#addRowbtn').click(function(){
+		
+		var parentSkuno = $('#queryParentSkuno').val();
+		var skuno = $('#querySkuno').val();
+		var label = $('#queryLabel').val();
+		var others = $('#queryOthers').val();
+		
+	    var data = {"skuno":"","parentSkuno":"","skuno":"","label":"","others":"","isPreDo":"","qty":""};
+	    $('#db_dependences').bootstrapTable('append',data);    
+	});
 	
 });
+
+function saveRowbtnAction(){
+	var rows = $('#db_dependences').bootstrapTable('getData', true);
+//	console.log(rows);
+	var data="";
+	for(var i in rows){
+		var json = JSON.stringify(rows[i]);
+		console.log("--------");
+		if(rows[i].id==undefined){
+//			console.log(rows[i].skuno);
+			data+=json+",";
+		}
+	}
+	data="["+data.substr(0,data.length-1)+"]";
+	console.log(data);
+	
+	$.ajax({
+		url:"/label/addList",
+		type:"post",
+		contentType:"application/json;charset=utf-8",
+		data:data,
+		dataType:"json",
+		success:function(result){
+			$('#db_dependences').bootstrapTable('refresh', { url: '/label/query'});	
+		},
+		error:function(){
+			alert("call error");
+		}
+	});
+}
+
+
+
 function queryLabelAction(){
-	var queryStr = $.parseJSON(JSON.stringify($('#queryLabelForm').serializeJSON()));
+	var parentSkuno = $('#queryParentSkuno').val();
+	var skuno = $('#querySkuno').val();
+	var label = $('#queryLabel').val();
+	var others = $('#queryOthers').val();
+	if(parentSkuno==undefined){
+		parentSkuno="";
+	}
+	if(skuno==undefined){
+		skuno="";
+	}
+	if(label==undefined){
+		label="";
+	}
+	if(others==undefined){
+		others="";
+	}
+	var queryStr = "parentSkunos="+parentSkuno+"&skunos="+skuno
+	+"&label="+label+"&others="+others
 	console.log(queryStr);
-	$('#db_dependences').bootstrapTable('refresh', { url: '/label/query'+queryStr});
+	$('#db_dependences').bootstrapTable('refresh', { url: '/label/query?'+queryStr});
+	$("#myQueryModal").modal("hide");
 }
 
 function queryLabel(){
@@ -42,6 +106,9 @@ function deleteLabel(){
 	    	ids=ids+" "+a[i].id;
 	    }
 	    console.log(ids);
+	    
+
+		
 	 	$.ajax({
 			url:"/label/delete",
 			type:"post",
@@ -132,7 +199,9 @@ function setTable(json){
         exportDataType: 'all',
         exportTypes:[ 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf'],  //导出文件类型
         onEditableSave: function (field, row, oldValue, $el) {
-        	
+        	if (row.id !=""&&row.id!=undefined){
+        		
+        	console.log(row);
 //        	alert(row);
             $.ajax({
             	url:"/label/update",
@@ -149,6 +218,7 @@ function setTable(json){
 
                 }
             });
+        	}
         },
 //      onEditableHidden: function(field, row, $el, reason) { // 当编辑状态被隐藏时触发
 //          if(reason === 'save') {
