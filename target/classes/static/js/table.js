@@ -4,7 +4,7 @@ $(function () {
     
 	var json ="";
 	$.ajax({
-		url:"/label/query",
+		url:"label/query",
 		type:"get",
 		contentType:"text/html;charset=utf-8",
 		dataType:"text",
@@ -53,13 +53,13 @@ function saveRowbtnAction(){
 	console.log(data);
 	
 	$.ajax({
-		url:"/label/addList",
+		url:"label/addList",
 		type:"post",
 		contentType:"application/json;charset=utf-8",
 		data:data,
 		dataType:"json",
 		success:function(result){
-			$('#db_dependences').bootstrapTable('refresh', { url: '/label/query'});	
+			$('#db_dependences').bootstrapTable('refresh', { url: 'label/query'});	
 		},
 		error:function(){
 			alert("call error");
@@ -89,7 +89,7 @@ function queryLabelAction(){
 	var queryStr = "parentSkunos="+parentSkuno+"&skunos="+skuno
 	+"&label="+label+"&others="+others
 	console.log(queryStr);
-	$('#db_dependences').bootstrapTable('refresh', { url: '/label/query?'+queryStr});
+	$('#db_dependences').bootstrapTable('refresh', { url: 'label/query?'+queryStr});
 	$("#myQueryModal").modal("hide");
 }
 
@@ -110,14 +110,14 @@ function deleteLabel(){
 
 		
 	 	$.ajax({
-			url:"/label/delete",
+			url:"label/delete",
 			type:"post",
 			contentType:"application/json;charset=utf-8",
 			data:"{\"ids\":\""+ids+"\"}",
 			dataType:"json",
 			success:function(result){
 				console.log(result);
-				$('#db_dependences').bootstrapTable('refresh', { url: '/label/query'});
+				$('#db_dependences').bootstrapTable('refresh', { url: 'label/query'});
 			},
 			error:function(){
 				alert(123);
@@ -138,7 +138,7 @@ function addLabelsubmit(){
 		return ;
 	}
 	$.ajax({
-		url:"/label/add",
+		url:"label/add",
 		type:"post",
 		contentType:"application/json;charset=utf-8",
 		data:json,
@@ -204,7 +204,7 @@ function setTable(json){
         	console.log(row);
 //        	alert(row);
             $.ajax({
-            	url:"/label/update",
+            	url:"label/update",
         		type:"post",
         		data:JSON.stringify( row ),
         		contentType:"application/json;charset=utf-8",
