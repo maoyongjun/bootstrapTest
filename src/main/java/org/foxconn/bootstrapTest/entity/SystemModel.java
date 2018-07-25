@@ -1,27 +1,30 @@
 package org.foxconn.bootstrapTest.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SystemModel {
-	private String pn;
-	private String sn;
+public class SystemModel extends Component{
 	private BoardModel board;
 	private CpuModel cpu;
 	private HddModel hdd;
 	private List<MemoryModel> memory;
 	private List<NicModel> nic;
 	private List<PsuModel> psu;
-	private String fw;
+	List<Component> component= new ArrayList<Component>();
 	
 	
-	public String getFw() {
-		return fw;
+	
+	public List<Component> getComponent() {
+		component.add(board);
+		component.add(hdd);
+		component.add(cpu);
+		component.addAll(memory);
+		component.addAll(nic);
+		component.addAll(psu);
+		return component;
 	}
-	public void setFw(String fw) {
-		if(null==fw || "null".equalsIgnoreCase(fw)){
-			fw="";
-		}
-		this.fw = fw;
+	public void setComponent(List<Component> component) {
+		this.component = component;
 	}
 	public BoardModel getBoard() {
 		return board;
@@ -58,18 +61,6 @@ public class SystemModel {
 	}
 	public void setPsu(List<PsuModel> psu) {
 		this.psu = psu;
-	}
-	public String getPn() {
-		return pn;
-	}
-	public void setPn(String pn) {
-		this.pn = pn;
-	}
-	public String getSn() {
-		return sn;
-	}
-	public void setSn(String sn) {
-		this.sn = sn;
 	}
 	
 }

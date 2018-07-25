@@ -1,12 +1,28 @@
 package org.foxconn.bootstrapTest.service;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.foxconn.bootstrapTest.dao.LabelDao;
 import org.foxconn.bootstrapTest.entity.BoardModel;
+import org.foxconn.bootstrapTest.entity.Component;
 import org.foxconn.bootstrapTest.entity.CpuModel;
 import org.foxconn.bootstrapTest.entity.HddModel;
 import org.foxconn.bootstrapTest.entity.LabelEntity;
@@ -17,12 +33,13 @@ import org.foxconn.bootstrapTest.entity.PsuModel;
 import org.foxconn.bootstrapTest.entity.Result;
 import org.foxconn.bootstrapTest.entity.SystemModel;
 import org.foxconn.bootstrapTest.entity.User;
+import org.foxconn.bootstrapTest.util.ExcleExportUtil;
+import org.foxconn.bootstrapTest.util.ToStringArrayUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
@@ -215,4 +232,92 @@ public class BootStrapServices {
 		result.setSystem(system);
 		return result;
 	}
+	
+	private List<ArrayList<String[]>> ls =new ArrayList<ArrayList<String[]>>();
+	
+	@GetMapping(value="/test6")
+	public Msg getExcle(){
+		Msg msg = new Msg();
+		msg.setMsg("OK");
+		logger.debug("begin write Excle");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+		String fileName ="data"+sdf.format( new Date())+".xlsx";
+		List data = new ArrayList<>();
+		Result result = getPage();
+		result.getSystem();
+		
+		List<ArrayList<String[]>> ls =new ArrayList<ArrayList<String[]>>();
+		ls.add((ArrayList<String[]>) ToStringArrayUtil.toStringArray(data));
+		File file = new File("c:\\"+fileName);
+		logger.debug("try to write Excle,sheet count:"+ls.size());
+		try {
+			ExcleExportUtil.write_Excel(file,(ArrayList)ls, new String[]{"data1","data2","data3","data4"}, "2");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+	
+	public void getJSON() throws IOException{
+		File file = new File("D:\\git\\bootstrapTest\\src\\main\\resources\\7CE829P6TL.json");
+		Reader reader=null;
+		try {
+			reader = new FileReader(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		BufferedReader br = new BufferedReader(reader);
+		StringBuffer sb = new StringBuffer();
+		String str="";
+		while((str=br.readLine())!=null){
+			sb.append(str);
+		}
+		System.out.println(sb);
+		Map map=  (Map) JSON.parse(sb.toString());
+		System.out.println(map);
+	}
+	
+	public void writeExcle(){
+		List<Component> ls = null;
+		Result result = getPage();
+		SystemModel system=  result.getSystem();
+        FileOutputStream output = null;
+		try {
+			output = new FileOutputStream("c:\\整機部件驗收清單.xlsx");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //读取的文件路径   
+        SXSSFWorkbook wb = new SXSSFWorkbook(10000);//内存中保留 10000 条数据，以免内存溢出，其余写入 硬盘          
+        ls= system.getComponent();
+        Sheet sheet = wb.createSheet(String.valueOf(0));  
+        int width=0;
+        wb.setSheetName(0, "整機部件驗收清單");     
+        ArrayList<String[]> ls2 = (ArrayList<String[]>) ToStringArrayUtil.toStringArray(ls);
+        for(int i=0;i<ls2.size();i++){  
+//            	System.out.println(i);
+            Row row = sheet.createRow(i);  
+            String[] s = ls2.get(i);                  
+            for(int cols=0;cols<s.length;cols++){  
+                Cell cell = row.createCell(cols);                     
+                cell.setCellType(XSSFCell.CELL_TYPE_STRING);//文本格式                    
+                if (null!=s[cols]) {
+                	sheet.setColumnWidth(cols, ((width=s[cols].length())<6?6:width)*384); //设置单元格宽度  
+                }
+                cell.setCellValue(s[cols]);//写入内容  
+            }  
+        }              
+        try {
+        	if(null!=output){
+        		wb.write(output);
+        		output.close();
+        	}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+	}
+	
+	
+	
+	
 }
