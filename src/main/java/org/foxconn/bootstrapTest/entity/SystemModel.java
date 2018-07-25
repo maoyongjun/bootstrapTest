@@ -18,9 +18,15 @@ public class SystemModel extends Component{
 		component.add(board);
 		component.add(hdd);
 		component.add(cpu);
-		component.addAll(memory);
-		component.addAll(nic);
-		component.addAll(psu);
+		if(null!=memory) {
+			component.addAll(memory);
+		}
+		if(null!=nic) {
+			component.addAll(nic);
+		}
+		if(null!=psu) {
+			component.addAll(psu);
+		}
 		return component;
 	}
 	public void setComponent(List<Component> component) {

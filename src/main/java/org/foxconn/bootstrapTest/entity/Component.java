@@ -39,7 +39,7 @@ public class Component extends BaseStringArray{
 	@Override
 	public String[] getHeader() {
 		// TODO Auto-generated method stub
-		return super.getHeader();
+		return new String[]{"pn","sn","fw"};
 	}
 	
 	
