@@ -4,7 +4,7 @@ public class Component extends BaseStringArray{
 	private String pn;
 	private String sn;
 	private String fw;
-
+	private String type;
 	
 	public String getFw() {
 		return fw;
@@ -34,13 +34,21 @@ public class Component extends BaseStringArray{
 	@Override
 	public String[] toStringArray() {
 		// TODO Auto-generated method stub
-		return new String[]{pn,sn,fw};
+		return new String[]{getType(),pn,sn,fw};
 	}
 	@Override
 	public String[] getHeader() {
 		// TODO Auto-generated method stub
-		return new String[]{"pn","sn","fw"};
+		return new String[]{"type","pn","sn","fw"};
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 	
 	
 }

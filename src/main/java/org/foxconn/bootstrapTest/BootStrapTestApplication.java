@@ -23,16 +23,10 @@ public class BootStrapTestApplication  extends SpringBootServletInitializer{
 		
 	}
 	public static void main(String[] args) throws IOException {
-		SpringApplication.run(BootStrapTestApplication.class, args);
+//		SpringApplication.run(BootStrapTestApplication.class, args);
 		BootStrapServices bootStrapServices = new BootStrapServices();
-		List<SystemModel> systems = new ArrayList<SystemModel>();
-		String json = bootStrapServices.getJSON("D:\\git\\bootstrapTest\\src\\main\\resources\\7CE829P6TL.json");
-		SystemModel system = JSON.parseObject(json, SystemModel.class);
-		systems.add(system);
-		json = bootStrapServices.getJSON("D:\\git\\bootstrapTest\\src\\main\\resources\\7CE830P1N7.json");
-		system = JSON.parseObject(json, SystemModel.class);
-		systems.add(system);
-		bootStrapServices.writeExcle(systems);
+		List<SystemModel> systemModel = bootStrapServices.getSystemModel();
+		bootStrapServices.writeExcle(systemModel);
 	}
 }
 	

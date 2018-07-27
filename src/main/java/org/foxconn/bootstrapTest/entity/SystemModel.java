@@ -6,18 +6,22 @@ import java.util.List;
 public class SystemModel extends Component{
 	private BoardModel board;
 	private CpuModel cpu;
-	private HddModel hdd;
+	private List<HddModel> hdd;
 	private List<MemoryModel> memory;
 	private List<NicModel> nic;
 	private List<PsuModel> psu;
 	List<Component> component= new ArrayList<Component>();
 	
-	
+	public String getType() {
+		return "SYSTEM";
+	}
 	
 	public List<Component> getComponent() {
 		component.add(board);
-		component.add(hdd);
 		component.add(cpu);
+		if(null!=hdd) {
+			component.addAll(hdd);
+		}
 		if(null!=memory) {
 			component.addAll(memory);
 		}
@@ -44,10 +48,11 @@ public class SystemModel extends Component{
 	public void setCpu(CpuModel cpu) {
 		this.cpu = cpu;
 	}
-	public HddModel getHdd() {
+	
+	public List<HddModel> getHdd() {
 		return hdd;
 	}
-	public void setHdd(HddModel hdd) {
+	public void setHdd(List<HddModel> hdd) {
 		this.hdd = hdd;
 	}
 	public List<MemoryModel> getMemory() {
