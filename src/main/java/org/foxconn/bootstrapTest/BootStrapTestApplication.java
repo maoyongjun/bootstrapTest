@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.foxconn.bootstrapTest.entity.SystemModel;
 import org.foxconn.bootstrapTest.service.BootStrapServices;
+import org.foxconn.bootstrapTest.util.ExcelImportUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,9 +25,10 @@ public class BootStrapTestApplication  extends SpringBootServletInitializer{
 	}
 	public static void main(String[] args) throws IOException {
 //		SpringApplication.run(BootStrapTestApplication.class, args);
-		BootStrapServices bootStrapServices = new BootStrapServices();
-		List<SystemModel> systemModel = bootStrapServices.getSystemModel();
-		bootStrapServices.writeExcle(systemModel);
+//		BootStrapServices bootStrapServices = new BootStrapServices();
+//		List<SystemModel> systemModel = bootStrapServices.getSystemModel();
+//		bootStrapServices.writeExcle(systemModel);
+		ExcelImportUtil.parseExcel("D:/test/硬盘使用规范.xlsx");
 	}
 }
 	
