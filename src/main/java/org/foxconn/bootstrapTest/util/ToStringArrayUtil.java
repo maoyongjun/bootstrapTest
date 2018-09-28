@@ -3,7 +3,9 @@ package org.foxconn.bootstrapTest.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.foxconn.bootstrapTest.entity.BaseStringArray;
+import org.junit.Test;
 
 
 /**
@@ -21,5 +23,16 @@ public class ToStringArrayUtil {
 			returnList.add(t.toStringArray());
 		}
 		return returnList;
+	}
+	@Test
+	public void test(){
+//		SqlSession sqlSession ;
+//		sqlSession.insert(statement, parameter)
+		Object o = new Integer(1);
+		if(o instanceof String){
+			System.out.println(1);
+		}else if(o instanceof Integer){
+			System.out.println(2);
+		}
 	}
 }

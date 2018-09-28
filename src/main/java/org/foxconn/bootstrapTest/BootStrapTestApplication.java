@@ -16,7 +16,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import com.alibaba.fastjson.JSON;
 
 @SpringBootApplication
-@MapperScan("org.foxconn.bootstrapTest.dao")
+//@MapperScan("org.foxconn.bootstrapTest.dao")
 public class BootStrapTestApplication  extends SpringBootServletInitializer{
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
@@ -24,11 +24,11 @@ public class BootStrapTestApplication  extends SpringBootServletInitializer{
 		
 	}
 	public static void main(String[] args) throws IOException {
-//		SpringApplication.run(BootStrapTestApplication.class, args);
+		SpringApplication.run(BootStrapTestApplication.class, args);
 //		BootStrapServices bootStrapServices = new BootStrapServices();
 //		List<SystemModel> systemModel = bootStrapServices.getSystemModel();
 //		bootStrapServices.writeExcle(systemModel);
-		ExcelImportUtil.parseExcel("D:/test/硬盘使用规范.xlsx");
+//		ExcelImportUtil.parseExcel("D:/test/硬盘使用规范.xlsx");
 	}
 }
 	

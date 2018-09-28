@@ -10,7 +10,9 @@ import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -22,12 +24,11 @@ import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.model.StylesTable;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder;
 import org.apache.poi.xssf.usermodel.extensions.XSSFCellBorder.BorderSide;
+import org.foxconn.bootstrapTest.dao.Label2Dao;
 import org.foxconn.bootstrapTest.dao.LabelDao;
 import org.foxconn.bootstrapTest.entity.BoardModel;
 import org.foxconn.bootstrapTest.entity.Component;
@@ -39,6 +40,7 @@ import org.foxconn.bootstrapTest.entity.Msg;
 import org.foxconn.bootstrapTest.entity.NicModel;
 import org.foxconn.bootstrapTest.entity.PsuModel;
 import org.foxconn.bootstrapTest.entity.Result;
+import org.foxconn.bootstrapTest.entity.ServerComponent;
 import org.foxconn.bootstrapTest.entity.SystemModel;
 import org.foxconn.bootstrapTest.entity.User;
 import org.foxconn.bootstrapTest.util.ExcleExportUtil;
@@ -54,11 +56,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api
 @RestController
 public class BootStrapServices {
 	Logger logger = LoggerFactory.getLogger(BootStrapServices.class);
-	@Resource
+//	@Resource
 	LabelDao labelDao;
+	@Resource
+	Label2Dao label2Dao;
 
 	@PostMapping(path = "/test1", consumes = "application/json")
 	public void getJson(@RequestBody Result system) {
@@ -92,7 +100,19 @@ public class BootStrapServices {
             return "false";
         }
 	}
+	@GetMapping(path="/find",produces="application/json")
+	public List<LabelEntity> getLabels(LabelEntity entity){
+		return label2Dao.findAllLabel(entity);
+	}
 
+	@GetMapping(path="/find1",produces="application/json")
+	public List<ServerComponent> getLabels2(){
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("pallents", "123");
+		return label2Dao.getSendComponent("123");
+	}
+	
+	
 	@PostMapping(path = "/test2", consumes = "application/json")
 	public void getJsonStr(@RequestBody String system) {
 		System.out.println(system);
